@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
+using FiroozehGameServiceAndroid;
 
 /// <summary>
 /// Spritesheet for Flappy Bird found here: http://www.spriters-resource.com/mobile_phone/flappybird/sheet/59537/
@@ -19,6 +21,7 @@ public class FlappyScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
 
     }
 
@@ -69,8 +72,8 @@ public class FlappyScript : MonoBehaviour
                 contactPoint = Input.mousePosition;
 
             //check if user wants to restart the game
-            if (restartButtonGameCollider == Physics2D.OverlapPoint
-                (Camera.main.ScreenToWorldPoint(contactPoint)))
+            if (Camera.main != null && restartButtonGameCollider == Physics2D.OverlapPoint
+                    (Camera.main.ScreenToWorldPoint(contactPoint)))
             {
                 GameStateManager.GameState = GameState.Intro;
                 Application.LoadLevel(Application.loadedLevelName);
@@ -82,26 +85,29 @@ public class FlappyScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        //just jump up and down on intro screen
-        if (GameStateManager.GameState == GameState.Intro)
+        switch (GameStateManager.GameState)
         {
-            if (GetComponent<Rigidbody2D>().velocity.y < -1) //when the speed drops, give a boost
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, GetComponent<Rigidbody2D>().mass * 5500 * Time.deltaTime)); //lots of play and stop 
-                                                        //and play and stop etc to find this value, feel free to modify
-        }
-        else if (GameStateManager.GameState == GameState.Playing || GameStateManager.GameState == GameState.Dead)
-        {
-            FixFlappyRotation();
+            //just jump up and down on intro screen
+            case GameState.Intro:
+            {
+                if (GetComponent<Rigidbody2D>().velocity.y < -1) //when the speed drops, give a boost
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, GetComponent<Rigidbody2D>().mass * 5500 * Time.deltaTime)); //lots of play and stop 
+                //and play and stop etc to find this value, feel free to modify
+                break;
+            }
+            case GameState.Playing:
+            case GameState.Dead:
+                FixFlappyRotation();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
     bool WasTouchedOrClicked()
     {
-        if (Input.GetButtonUp("Jump") || Input.GetMouseButtonDown(0) || 
-            (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended))
-            return true;
-        else
-            return false;
+        return Input.GetButtonUp("Jump") || Input.GetMouseButtonDown(0) || 
+               Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended;
     }
 
     void MoveBirdOnXAxis()
@@ -122,8 +128,7 @@ public class FlappyScript : MonoBehaviour
     /// </summary>
     private void FixFlappyRotation()
     {
-        if (GetComponent<Rigidbody2D>().velocity.y > 0) flappyYAxisTravelState = FlappyYAxisTravelState.GoingUp;
-        else flappyYAxisTravelState = FlappyYAxisTravelState.GoingDown;
+        flappyYAxisTravelState = GetComponent<Rigidbody2D>().velocity.y > 0 ? FlappyYAxisTravelState.GoingUp : FlappyYAxisTravelState.GoingDown;
 
         float degreesToAdd = 0;
 
@@ -151,28 +156,24 @@ public class FlappyScript : MonoBehaviour
     /// <param name="col"></param>
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (GameStateManager.GameState == GameState.Playing)
+        if (GameStateManager.GameState != GameState.Playing) return;
+        if (col.gameObject.CompareTag("Pipeblank")) //pipeblank is an empty gameobject with a collider between the two pipes
         {
-            if (col.gameObject.tag == "Pipeblank") //pipeblank is an empty gameobject with a collider between the two pipes
-            {
-                GetComponent<AudioSource>().PlayOneShot(ScoredAudioClip);
-                ScoreManagerScript.Score++;
-            }
-            else if (col.gameObject.tag == "Pipe")
-            {
-                FlappyDies();
-            }
+            GetComponent<AudioSource>().PlayOneShot(ScoredAudioClip);
+            ScoreManagerScript.Score++;
+        }
+        else if (col.gameObject.CompareTag("Pipe"))
+        {
+            FlappyDies();
         }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (GameStateManager.GameState == GameState.Playing)
+        if (GameStateManager.GameState != GameState.Playing) return;
+        if (col.gameObject.CompareTag("Floor"))
         {
-            if (col.gameObject.tag == "Floor")
-            {
-                FlappyDies();
-            }
+            FlappyDies();
         }
     }
 
