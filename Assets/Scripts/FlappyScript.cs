@@ -1,7 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using FiroozehGameServiceAndroid;
+using FiroozehGameServiceAndroid.Builders;
+using Newtonsoft.Json;
+using UnityEngine.UI;
 
 /// <summary>
 /// Spritesheet for Flappy Bird found here: http://www.spriters-resource.com/mobile_phone/flappybird/sheet/59537/
@@ -17,11 +19,76 @@ public class FlappyScript : MonoBehaviour
     public Collider2D restartButtonGameCollider;
     public float VelocityPerJump = 3;
     public float XSpeed = 1;
+    
+    
 
+    // Game Service property
+    public static FiroozehGameService _gameService;
+    private string Error;
+    private string Res;
+
+    public Button play;
+    public Button LeaderBord;
+    public Button Achievement;
+    
+    
     // Use this for initialization
     void Start()
     {
         
+        play.onClick.AddListener(()=>
+        {
+            BoostOnYAxis();
+            GameStateManager.GameState = GameState.Playing;
+            IntroGUI.SetActive(false);
+        });
+        
+        LeaderBord.onClick.AddListener(()=>
+        {
+            _gameService?.ShowLeaderBoardsUI(e =>
+            {
+                Error = "ShowLeaderBoardsUI Error : "+e;
+            });
+        });
+        
+        Achievement.onClick.AddListener(()=>
+        {
+            _gameService?.ShowAchievementsUI(e =>
+            {
+                Error = "ShowAchievementsUI Error : "+e;
+            });
+        });
+        
+        
+        if(_gameService == null)
+        FiroozehGameServiceInitializer
+            .With("Your clientId","Your clientSecret")
+            .IsNotificationEnable(true)
+            .CheckGameServiceInstallStatus(true)
+            .Init(g =>
+                {
+                    _gameService = g;
+                    
+                    
+                    _gameService?.GetSaveGame(c =>
+                    {
+                        Save save = JsonConvert.DeserializeObject<Save>(c);
+                        ScoreManagerScript.Score = save.Score;
+
+                    }
+                        , e => {
+                        Error = "GetSaveGame Error : " + e;
+
+                    });
+                    
+                    
+                }, 
+                e =>
+                {
+                    Debug.Log("FiroozehGameServiceInitializerError: "+e);
+                });
+        
+      
 
     }
 
@@ -40,46 +107,40 @@ public class FlappyScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
 
-        if (GameStateManager.GameState == GameState.Intro)
+        switch (GameStateManager.GameState)
         {
-            MoveBirdOnXAxis();
-            if (WasTouchedOrClicked())
+            case GameState.Intro:
+                break;
+            case GameState.Playing:
             {
-                BoostOnYAxis();
-                GameStateManager.GameState = GameState.Playing;
-                IntroGUI.SetActive(false);
-                ScoreManagerScript.Score = 0;
+                MoveBirdOnXAxis();
+                if (WasTouchedOrClicked())
+                {
+                    BoostOnYAxis();
+                }
+
+                break;
+            }
+            case GameState.Dead:
+            {
+                Vector2 contactPoint = Vector2.zero;
+
+                if (Input.touchCount > 0)
+                    contactPoint = Input.touches[0].position;
+                if (Input.GetMouseButtonDown(0))
+                    contactPoint = Input.mousePosition;
+
+                //check if user wants to restart the game
+                if (Camera.main != null && restartButtonGameCollider == Physics2D.OverlapPoint
+                        (Camera.main.ScreenToWorldPoint(contactPoint)))
+                {
+                    GameStateManager.GameState = GameState.Intro;
+                    Application.LoadLevel(Application.loadedLevelName);
+                }
+
+                break;
             }
         }
-
-        else if (GameStateManager.GameState == GameState.Playing)
-        {
-            MoveBirdOnXAxis();
-            if (WasTouchedOrClicked())
-            {
-                BoostOnYAxis();
-            }
-
-        }
-
-        else if (GameStateManager.GameState == GameState.Dead)
-        {
-            Vector2 contactPoint = Vector2.zero;
-
-            if (Input.touchCount > 0)
-                contactPoint = Input.touches[0].position;
-            if (Input.GetMouseButtonDown(0))
-                contactPoint = Input.mousePosition;
-
-            //check if user wants to restart the game
-            if (Camera.main != null && restartButtonGameCollider == Physics2D.OverlapPoint
-                    (Camera.main.ScreenToWorldPoint(contactPoint)))
-            {
-                GameStateManager.GameState = GameState.Intro;
-                Application.LoadLevel(Application.loadedLevelName);
-            }
-        }
-
     }
 
 
@@ -140,8 +201,6 @@ public class FlappyScript : MonoBehaviour
             case FlappyYAxisTravelState.GoingDown:
                 degreesToAdd = -3 * RotateDownSpeed;
                 break;
-            default:
-                break;
         }
         //solution with negative eulerAngles found here: http://answers.unity3d.com/questions/445191/negative-eular-angles.html
 
@@ -161,6 +220,78 @@ public class FlappyScript : MonoBehaviour
         {
             GetComponent<AudioSource>().PlayOneShot(ScoredAudioClip);
             ScoreManagerScript.Score++;
+
+            switch (ScoreManagerScript.Score)
+            {
+               case  5:
+                {
+                    _gameService?.UnlockAchievement("FIVE_SCORE", c =>
+                    {
+                        Res = "Five Score Achievement Unlocked!!";
+                    }, e =>
+                    {
+                        Error = "UnlockAchievement Error : "+e;
+                    });
+                    break;    
+                }
+                case 10:
+                {
+                    _gameService?.UnlockAchievement("TEN_SCORE", c =>
+                    {
+                        Res = "Ten Score Achievement Unlocked!!";
+                    }, e =>
+                    {
+                        Error = "UnlockAchievement Error : "+e;
+                    });
+                    break;
+                }
+                case 15:
+                {
+                    _gameService?.UnlockAchievement("FIFTEEN_SCORE", c =>
+                    {
+                        Res = "Fifteen Score Achievement Unlocked!!";
+                    }, e =>
+                    {
+                        Error = "UnlockAchievement Error : "+e;
+                    });
+                    
+                    break;
+                }
+                case 20:
+                {
+                    _gameService?.UnlockAchievement("TWENTY_SCORE", c =>
+                    {
+                        Res = "Twenty Score Achievement Unlocked!!";
+                    }, e =>
+                    {
+                        Error = "UnlockAchievement Error : "+e;
+                    });
+
+                    
+                    break;
+                }
+
+                default:
+                {
+                    if(ScoreManagerScript.Score > 20)
+                    _gameService?.SubmitScore("FloppyBird_List",ScoreManagerScript.Score
+                        , c =>
+                        {
+                            Res = "SubmitScore with "+ScoreManagerScript.Score+" Saved!!";
+
+                        }, e =>
+                        {
+                            Error = "SubmitScore Error : " + e;
+                            
+                        });
+                    break;
+                }
+                   
+            }
+            
+            
+            
+            
         }
         else if (col.gameObject.CompareTag("Pipe"))
         {
@@ -171,17 +302,54 @@ public class FlappyScript : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         if (GameStateManager.GameState != GameState.Playing) return;
-        if (col.gameObject.CompareTag("Floor"))
-        {
-            FlappyDies();
-        }
+        if (!col.gameObject.CompareTag("Floor")) return;
+        
+        FlappyDies();
     }
 
     void FlappyDies()
     {
+        Save save = new Save();
+        save.Score = ScoreManagerScript.Score;
+
+        _gameService?.SaveGame("FloppyBird_SAVE_"+Time.time,
+            "FloppyBirdSaveDone"
+            ,null,JsonConvert.SerializeObject(save),
+            c =>
+            {
+                    
+                Res = "SaveGame with "+ScoreManagerScript.Score+" Done!!";
+
+            }, e =>
+            {
+                Error = "SaveGame Error : " + e;
+            });
+
+        
         GameStateManager.GameState = GameState.Dead;
         DeathGUI.SetActive(true);
         GetComponent<AudioSource>().PlayOneShot(DeathAudioClip);
+        
+        
+    }
+    
+    /// <summary>
+    /// Found here
+    /// http://www.bensilvis.com/?p=500
+    /// </summary>
+    /// <param name="screenWidth"></param>
+    /// <param name="screenHeight"></param>
+    public static void AutoResize(int screenWidth, int screenHeight)
+    {
+        Vector2 resizeRatio = new Vector2((float)Screen.width / screenWidth, (float)Screen.height / screenHeight);
+        GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(resizeRatio.x, resizeRatio.y, 1.0f));
+    }
+
+    void OnGUI()
+    {
+        GUI.Label(new Rect(700, 50, 200, 100), "Response: " + Res);
+        GUI.Label(new Rect(50, 400, 500, 500), "Error " + Error);
+
     }
 
 }

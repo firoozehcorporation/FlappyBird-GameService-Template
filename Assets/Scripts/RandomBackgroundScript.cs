@@ -5,7 +5,7 @@ public class RandomBackgroundScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        (GetComponent<Renderer>() as SpriteRenderer).sprite = Backgrounds[Random.Range(0, Backgrounds.Length)];
+        ((SpriteRenderer) GetComponent<Renderer>()).sprite = Backgrounds[Random.Range(0, Backgrounds.Length)];
 	}
 	
 	// Update is called once per frame

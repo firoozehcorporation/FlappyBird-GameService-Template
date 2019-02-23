@@ -7,8 +7,8 @@ public class ScoreManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        (Tens.gameObject as GameObject).SetActive(false);
-        (Hundreds.gameObject as GameObject).SetActive(false);
+        Tens.gameObject.SetActive(false);
+        Hundreds.gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -23,13 +23,13 @@ public class ScoreManagerScript : MonoBehaviour {
             }
             else if(Score >= 10 && Score < 100)
             {
-                (Tens.gameObject as GameObject).SetActive(true);
+                Tens.gameObject.SetActive(true);
                 Tens.sprite = numberSprites[Score / 10];
                 Units.sprite = numberSprites[Score % 10];
             }
             else if(Score >= 100)
             {
-                (Hundreds.gameObject as GameObject).SetActive(true);
+                Hundreds.gameObject.SetActive(true);
                 Hundreds.sprite = numberSprites[Score / 100];
                 int rest = Score % 100;
                 Tens.sprite = numberSprites[rest / 10];

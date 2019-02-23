@@ -17,7 +17,7 @@ public class SpawnerScript : MonoBehaviour
         {
             //random y position
             float y = Random.Range(-0.5f, 1f);
-            GameObject go = Instantiate(SpawnObject, this.transform.position + new Vector3(0, y, 0), Quaternion.identity) as GameObject;
+            GameObject go = Instantiate(SpawnObject, transform.position + new Vector3(0, y, 0), Quaternion.identity);
         }
         Invoke("Spawn", Random.Range(timeMin, timeMax));
     }
