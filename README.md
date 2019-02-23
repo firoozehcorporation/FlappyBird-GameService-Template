@@ -1,13 +1,14 @@
-[![unofficial Google Analytics for GitHub](https://gaforgithub.azurewebsites.net/api?repo=FlappyBirdStyleGame)](https://github.com/dgkanatsios/gaforgithub)
 
-# Flappy Bird style game
 
-![Developing the game](https://dgkanatsios.files.wordpress.com/2014/07/image_0d2036fe.png)
+<p align="center">
+  <img width="250" height="250" src="https://static.techspot.com/images2/downloads/topdownload/2014/05/86a8196b0bc822a6f969451fab76503c_256_256.png">
+</p>
 
-Source code for a Flappy Bird style game built in Unity game engine. You can check the blog post explaining its creation [here](http://dgkanatsios.com/2014/07/02/a-flappy-bird-clone-in-unity-source-code-included-3/).
+#  Flappy Bird بازی تستی
 
-It has been tested and developed on Unity 5.6.
+####   بازی نمونه برای تست [ گیم سرویس](https://github.com/AR-Ghodrati/GameService_UnitySide) 
 
-### Assets sources
-Sprites: https://www.spriters-resource.com/mobile/flappybird/sheet/59894/
-Sounds: https://www.sounds-resource.com/mobile/flappybird/sound/5309/
+---
+
+### :استفاده شده از 
+#### 1-[Flappy Brid](https://github.com/dgkanatsios/FlappyBirdStyleGame)
