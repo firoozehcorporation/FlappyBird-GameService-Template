@@ -14,7 +14,7 @@ public class FlappyScript : MonoBehaviour
 
     public AudioClip FlyAudioClip, DeathAudioClip, ScoredAudioClip;
     public Sprite GetReadySprite;
-    public float RotateUpSpeed = 1, RotateDownSpeed = 1;
+    public float RotateUpSpeed = .5f, RotateDownSpeed = .5f;
     public GameObject IntroGUI, DeathGUI;
     public Collider2D restartButtonGameCollider;
     public float VelocityPerJump = 3;
@@ -30,6 +30,7 @@ public class FlappyScript : MonoBehaviour
     public Button play;
     public Button LeaderBord;
     public Button Achievement;
+    public Button Survey;
     
     
     // Use this for initialization
@@ -59,11 +60,20 @@ public class FlappyScript : MonoBehaviour
             });
         });
         
+        Survey.onClick.AddListener(()=>
+        {
+            _gameService?.ShowSurveyUi(e =>
+            {
+                Error = "ShowSurveyUi Error : "+e;
+            });
+        });
+        
         
         if(_gameService == null)
         FiroozehGameServiceInitializer
             .With("Your clientId","Your clientSecret")
             .IsNotificationEnable(true)
+            .CheckGameServiceOptionalUpdate(true)
             .CheckGameServiceInstallStatus(true)
             .Init(g =>
                 {
@@ -80,6 +90,8 @@ public class FlappyScript : MonoBehaviour
                         Error = "GetSaveGame Error : " + e;
 
                     });
+                    
+                    _gameService?.ShowSurveyUi(e=>{});
                     
                     
                 }, 
@@ -221,6 +233,9 @@ public class FlappyScript : MonoBehaviour
             GetComponent<AudioSource>().PlayOneShot(ScoredAudioClip);
             ScoreManagerScript.Score++;
 
+            if (ScoreManagerScript.Score % 5 == 0)
+                XSpeed += XSpeed*.1f;
+
             switch (ScoreManagerScript.Score)
             {
                case  5:
@@ -273,7 +288,7 @@ public class FlappyScript : MonoBehaviour
 
                 default:
                 {
-                    if(ScoreManagerScript.Score > 20)
+                    if(ScoreManagerScript.Score > 20 && ScoreManagerScript.Score % 5 == 0)
                     _gameService?.SubmitScore("FloppyBird_List",ScoreManagerScript.Score
                         , c =>
                         {
