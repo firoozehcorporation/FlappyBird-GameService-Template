@@ -79,6 +79,23 @@ public class FlappyScript : MonoBehaviour
                 {
                     _gameService = g;
                     
+                    _gameService?.DownloadObbData("main.VersionCode.<PackageName>.obb", r =>
+                        {
+                            Error = "DownloadObbData Res : " + r;
+                            
+                            
+                        },
+                        e =>
+                        {
+                            if(e.Equals("Download_Dismissed"))
+                                Application.Quit();
+                            
+                            Error = "DownloadObbData Error : " + e;
+                        });
+                    
+                   
+
+                    
                     
                     _gameService?.GetSaveGame(c =>
                     {
@@ -91,8 +108,7 @@ public class FlappyScript : MonoBehaviour
 
                     });
                     
-                    _gameService?.ShowSurveyUi(e=>{});
-                    
+                   
                     
                 }, 
                 e =>
