@@ -78,16 +78,21 @@ public class FlappyScript : MonoBehaviour
             .Init(g =>
                 {
                     _gameService = g;
-                    
+                                        
                     _gameService?.DownloadObbData("main.VersionCode.<PackageName>.obb", r =>
                         {
+                            if (r.Equals("Data_Download_Finished") || r.Equals("Data_Downloaded"))
+                            {
+                                //Now Data Exist!! , Load Base Scenes
+                            }
+
                             Error = "DownloadObbData Res : " + r;
                             
                             
                         },
                         e =>
                         {
-                            if(e.Equals("Download_Dismissed"))
+                            if(e.Equals("Data_Download_Dismissed"))
                                 Application.Quit();
                             
                             Error = "DownloadObbData Error : " + e;
