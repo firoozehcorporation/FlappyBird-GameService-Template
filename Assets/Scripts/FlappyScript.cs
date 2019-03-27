@@ -84,11 +84,8 @@ public class FlappyScript : MonoBehaviour
                             if (r.Equals("Data_Download_Finished") || r.Equals("Data_Downloaded"))
                             {
                                 //Now Data Exist!! , Load Base Scenes
-                            }
-
-                            Error = "DownloadObbData Res : " + r;
-                            
-                            
+                            }     
+                      
                         },
                         e =>
                         {
