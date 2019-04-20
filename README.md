@@ -4,7 +4,7 @@
 
 #  Flappy Bird بازی تستی
 
-####   بازی نمونه برای تست [ گیم سرویس](https://github.com/firoozehcorp/GameService_Unity_SDK) 
+####   بازی نمونه برای تست [ گیم سرویس](https://github.com/firoozehcorporation/GameService-Android-Unity-SDK) 
 
 ---
 
