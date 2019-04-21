@@ -99,11 +99,9 @@ public class FlappyScript : MonoBehaviour
 
                     
                     
-                    _gameService?.GetSaveGame(c =>
+                    _gameService?.GetSaveGame<Save>(save =>
                     {
-                        Save save = JsonConvert.DeserializeObject<Save>(c);
                         ScoreManagerScript.Score = save.Score;
-
                     }
                         , e => {
                         Error = "GetSaveGame Error : " + e;
