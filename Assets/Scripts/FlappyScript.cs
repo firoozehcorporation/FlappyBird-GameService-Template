@@ -42,6 +42,7 @@ public class FlappyScript : MonoBehaviour
             BoostOnYAxis();
             GameStateManager.GameState = GameState.Playing;
             IntroGUI.SetActive(false);
+            ScoreManagerScript.score.gameObject.SetActive(true);
         });
         
         LeaderBord.onClick.AddListener(()=>
@@ -340,12 +341,11 @@ public class FlappyScript : MonoBehaviour
 
     void FlappyDies()
     {
-        Save save = new Save();
-        save.Score = ScoreManagerScript.Score;
+        ScoreManagerScript.score.gameObject.SetActive(false);
 
         _gameService?.SaveGame("FloppyBird_SAVE_"+Time.time,
             "FloppyBirdSaveDone"
-            ,null,JsonConvert.SerializeObject(save),
+            ,null,new Save {Score = ScoreManagerScript.Score},
             c =>
             {
                     
@@ -358,6 +358,7 @@ public class FlappyScript : MonoBehaviour
 
         
         GameStateManager.GameState = GameState.Dead;
+        ScoreManagerScript.Score = 0;
         DeathGUI.SetActive(true);
         GetComponent<AudioSource>().PlayOneShot(DeathAudioClip);
         
@@ -378,8 +379,8 @@ public class FlappyScript : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(new Rect(700, 50, 200, 100), "Response: " + Res);
-        GUI.Label(new Rect(50, 400, 500, 500), "Error " + Error);
+        // GUI.Label(new Rect(700, 50, 200, 100), "Response: " + Res);
+        // GUI.Label(new Rect(50, 400, 500, 500), "Error " + Error);
 
     }
 

@@ -9,7 +9,7 @@ using UnityEngine;
     {
         void OnTriggerEnter2D(Collider2D col)
         {
-            if (col.tag == "Pipe" || col.tag == "Pipeblank")
+            if (col.CompareTag("Pipe") || col.CompareTag("Pipeblank"))
                 Destroy(col.gameObject.transform.parent.gameObject); //free up some memory
         }
     }

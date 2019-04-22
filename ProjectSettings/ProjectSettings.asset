@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Firoozeh.Co
+  companyName: FiroozehCorp
   productName: FlappyBird
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -150,7 +150,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.firoozeh.FlappyBird
+    Android: ir.FiroozehCorp.FlappyBird
     Standalone: unity.DefaultCompany.FlappyBirdClone
     Tizen: com.Company.ProductName
     iOS: com.Company.ProductName
@@ -168,7 +168,7 @@ PlayerSettings:
   ForceInternetPermission: 1
   ForceSDCardPermission: 0
   CreateWallpaper: 0
-  APKExpansionFiles: 1
+  APKExpansionFiles: 0
   keepLoadedShadersAlive: 0
   StripUnusedMeshComponents: 1
   VertexChannelCompressionMask: 214
@@ -244,8 +244,8 @@ PlayerSettings:
   templateDefaultScene: 
   AndroidTargetArchitectures: 5
   AndroidSplashScreenScale: 0
-  androidSplashScreen: {fileID: 2800000, guid: 225b42db2678f47bfafcc61450a24d55, type: 3}
-  AndroidKeystoreName: 
+  androidSplashScreen: {fileID: 0}
+  AndroidKeystoreName: user.keystore
   AndroidKeyaliasName: 
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
