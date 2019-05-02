@@ -236,22 +236,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ac5c3d355e78440229947500d182cb4b, type: 3}
-    m_FontSize: 20
+    m_Font: {fileID: 12800000, guid: 5b2fdaad078344f779c766ac6e32b45f, type: 3}
+    m_FontSize: 10
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
+    m_MinSize: 1
+    m_MaxSize: 30
     m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
+    m_AlignByGeometry: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -412,8 +412,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -115, y: -197.39996}
-  m_SizeDelta: {x: 70.3, y: 57.2}
+  m_AnchoredPosition: {x: -36.9, y: -62.78}
+  m_SizeDelta: {x: 25.2, y: 21.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &645267876
 MonoBehaviour:
@@ -954,13 +954,13 @@ MonoBehaviour:
   DeathAudioClip: {fileID: 8300000, guid: fe4250c182d35324b8570640076c423d, type: 3}
   ScoredAudioClip: {fileID: 8300000, guid: 6e07426d69e17e54c86f5b9436253f92, type: 3}
   GetReadySprite: {fileID: 21300020, guid: aab37b51d898f764abaf04d75f0eb322, type: 3}
-  RotateUpSpeed: 0.5
-  RotateDownSpeed: 0.5
+  RotateUpSpeed: 0.3
+  RotateDownSpeed: 0.3
   IntroGUI: {fileID: 686664586}
   DeathGUI: {fileID: 1776645348}
   restartButtonGameCollider: {fileID: 1325426905}
-  VelocityPerJump: 3
-  XSpeed: 2
+  VelocityPerJump: 2.5
+  XSpeed: 1
   play: {fileID: 1089782191}
   LeaderBord: {fileID: 1419564663}
   Achievement: {fileID: 645267878}
@@ -993,7 +993,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0.5
@@ -1537,8 +1537,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -93}
-  m_SizeDelta: {x: 200.05, y: 62.15}
+  m_AnchoredPosition: {x: 0.84998, y: -10.897}
+  m_SizeDelta: {x: 46.37, y: 21.795}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1089782191
 MonoBehaviour:
@@ -1883,8 +1883,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10, y: -197.4}
-  m_SizeDelta: {x: 70.3, y: 57.2}
+  m_AnchoredPosition: {x: 0.84999347, y: -62.78}
+  m_SizeDelta: {x: 25.2, y: 21.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1419564661
 MonoBehaviour:
@@ -2097,8 +2097,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: 255.5}
-  m_SizeDelta: {x: 289.8, y: 64.3}
+  m_AnchoredPosition: {x: 0.8, y: 78.6}
+  m_SizeDelta: {x: 45.88, y: 22.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1834743271
 MonoBehaviour:
@@ -2122,11 +2122,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: ac5c3d355e78440229947500d182cb4b, type: 3}
-    m_FontSize: 30
+    m_FontSize: 10
     m_FontStyle: 1
     m_BestFit: 1
-    m_MinSize: 30
-    m_MaxSize: 300
+    m_MinSize: 1
+    m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 1
     m_RichText: 1
@@ -2223,7 +2223,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e87964a359374433c89fcf607cd4ff65, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9a83e8b35863c48a1a74b0c508bdabe1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2256,8 +2256,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 91.5, y: -197}
-  m_SizeDelta: {x: 81.2, y: 68.1}
+  m_AnchoredPosition: {x: 37.279995, y: -62.51}
+  m_SizeDelta: {x: 29.26, y: 25.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2105998850
 GameObject:

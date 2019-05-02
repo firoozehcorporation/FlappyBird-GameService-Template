@@ -10,4 +10,3 @@
 
 ### :استفاده شده از 
 #### 1-[Flappy Brid](https://github.com/dgkanatsios/FlappyBirdStyleGame)
-
