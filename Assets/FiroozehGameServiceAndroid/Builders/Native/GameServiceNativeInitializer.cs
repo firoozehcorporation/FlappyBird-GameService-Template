@@ -1,4 +1,4 @@
-﻿// <copyright file="IGameServiceCallback.cs" company="Firoozeh Technology LTD">
+// <copyright file="GameServiceNativeInitializer.cs" company="Firoozeh Technology LTD">
 // Copyright (C) 2019 Firoozeh Technology LTD. All Rights Reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,44 +15,31 @@
 // </copyright>
 
 
+using System;
 using FiroozehGameServiceAndroid.Core;
-using UnityEngine;
+using FiroozehGameServiceAndroid.Core.Native;
+using FiroozehGameServiceAndroid.Enums;
 
 /**
 * @author Alireza Ghodrati
 */
 
-
-
-namespace FiroozehGameServiceAndroid.Interfaces
+namespace FiroozehGameServiceAndroid.Builders.Native
 {
     #if UNITY_ANDROID
-    public class IGameServiceCallback : AndroidJavaProxy
+    internal static class GameServiceNativeInitializer
     {
-
-        private readonly DelegateCore.OnCallback _oncallback;
-        private readonly DelegateCore.OnError _onError;
-
-        public IGameServiceCallback(DelegateCore.OnCallback callback, DelegateCore.OnError onError)
-            : base("ir.FiroozehCorp.UnityPlugin.Interfaces.IGameServiceCallback")
+        internal static void Init(GameServiceClientConfiguration configuration
+            ,Action<GameService> onSuccess
+            ,Action<string> onError)
         {
-            _oncallback = callback;
-            _onError = onError;
-
+            var nativeService =  NativePluginHandler.GetGameServiceInstance();
+            NativePluginHandler.InitGameService(
+                nativeService
+                ,configuration
+                ,gameService=>{ onSuccess.Invoke(new GameService(gameService,GameServiceType.Native,false));}
+                ,onError.Invoke);
         }
-
-        void OnCallback(string Result)
-        {
-            _oncallback.Invoke(Result);
-        }
-
-        void OnError(string Error)
-        {
-            _onError.Invoke(Error);
-        }
-
-
-
     }
     #endif
 }

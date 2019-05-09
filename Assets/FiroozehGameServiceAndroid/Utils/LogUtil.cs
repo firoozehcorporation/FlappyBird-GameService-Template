@@ -1,4 +1,4 @@
-﻿// <copyright file="LeaderBoardDetails.cs" company="Firoozeh Technology LTD">
+// <copyright file="LogUtil.cs" company="Firoozeh Technology LTD">
 // Copyright (C) 2019 Firoozeh Technology LTD. All Rights Reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,31 +14,33 @@
 //    limitations under the License.
 // </copyright>
 
-using System.Collections.Generic;
+
+using UnityEngine;
 
 /**
 * @author Alireza Ghodrati
 */
 
 
-namespace FiroozehGameServiceAndroid.Models
+namespace FiroozehGameServiceAndroid.Utils
 {
-    [System.Serializable]
-    public class LeaderBoardDetails
+    public static class LogUtil
     {
 
-        public LeaderBoard leaderboard { set; get; }
-
-        public List<Score> scores { set; get; }
-
-        public override string ToString()
+ 
+        public static void LogDebug(string where,string debug)
         {
-            return "LeaderBoardReceiver{" +
-                   "leaderboard=" + leaderboard +
-                   ", scores=" + scores +
-                   '}';
+           Debug.Log("LogHappenedIn : "+where +" ,With Text :"+debug);
         }
-     
+        
+        public static void LogWarning(string where,string warning)
+        {
+            Debug.LogWarning("WarningHappenedIn : "+where +" ,With Text :"+warning);
+        }
+
+        public static void LogError(string where,string error)
+        {
+            Debug.LogError("ErrorHappenedIn : "+where +" ,With Text :"+error);
+        }
     }
 }
-

@@ -1,39 +1,57 @@
-﻿using FiroozehGameServiceAndroid.Interfaces;
+﻿// <copyright file="AppPluginHandler.cs" company="Firoozeh Technology LTD">
+// Copyright (C) 2019 Firoozeh Technology LTD. All Rights Reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
+
+using FiroozehGameServiceAndroid.Interfaces;
+using FiroozehGameServiceAndroid.Interfaces.App;
 using UnityEngine;
 
-namespace FiroozehGameServiceAndroid.Core
-{
-    public static class GameServicePluginHandler {
+/**
+* @author Alireza Ghodrati
+*/
 
-#if UNITY_ANDROID
+namespace FiroozehGameServiceAndroid.Core.App
+{
+    #if UNITY_ANDROID
+    public static class AppPluginHandler {
+
         private static AndroidJavaObject GetGameServiceInstance()
         {
-            var gameService = PluginProvider.GetGameService();
-            var unityActivity = PluginProvider.GetUnityActivity();
+            var gameService = AppPluginProvider.GetGameService();
+            var unityActivity = AppPluginProvider.GetUnityActivity();
 
             gameService.Call("SetUnityContext", unityActivity);
 
             return gameService;
         }
-#endif
 
-#if UNITY_ANDROID
         private static AndroidJavaObject GetGameLoginServiceInstance()
         {
-            var loginService = PluginProvider.GetLoginService();
-            var unityActivity = PluginProvider.GetUnityActivity();
+            var loginService = AppPluginProvider.GetLoginService();
+            var unityActivity = AppPluginProvider.GetUnityActivity();
 
             loginService.Call("SetUnityContext", unityActivity);
 
             return loginService;
         }
-#endif
 
-#if UNITY_ANDROID
         public static void InitGameService(
              string clientId
-            ,string clientSecret,
-            DelegateCore.OnSuccessInit onSuccess,
+            ,string clientSecret
+             ,bool logEnable
+            ,DelegateCore.OnSuccessInit onSuccess,
             DelegateCore.OnError onError)
         {
    
@@ -42,6 +60,7 @@ namespace FiroozehGameServiceAndroid.Core
             gameService.Call("InitGameService",
                 clientId,
                 clientSecret,
+                logEnable,
                 new IGameServiceCallback(callBack => {
                         if(callBack.Equals("Success"))
                             onSuccess.Invoke(gameService);
@@ -49,13 +68,10 @@ namespace FiroozehGameServiceAndroid.Core
                     onError.Invoke));
         }
 
-#endif
-
-#if UNITY_ANDROID
-
         public static void InitGameLoginService(
              bool checkAppStatus
             ,bool checkOptionalUpdate
+             ,bool logEnable
             ,DelegateCore.OnSuccessInit onSuccess,
             DelegateCore.OnError onError)
         {
@@ -64,17 +80,14 @@ namespace FiroozehGameServiceAndroid.Core
 
             loginService.Call("InitLoginService",
                 checkAppStatus,
-                checkOptionalUpdate,
+                checkOptionalUpdate
+                ,logEnable,
                 new IGameServiceCallback(callBack => {
                         if (callBack.Equals("Success"))
                             onSuccess.Invoke(loginService);
                     },
                     onError.Invoke));
         }
-
-#endif
-
-
-
     }
+    #endif
 }

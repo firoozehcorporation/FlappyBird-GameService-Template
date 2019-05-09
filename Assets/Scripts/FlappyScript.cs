@@ -2,6 +2,8 @@
 using UnityEngine;
 using FiroozehGameServiceAndroid;
 using FiroozehGameServiceAndroid.Builders;
+using FiroozehGameServiceAndroid.Core;
+using FiroozehGameServiceAndroid.Enums;
 using Newtonsoft.Json;
 using UnityEngine.UI;
 
@@ -22,8 +24,6 @@ public class FlappyScript : MonoBehaviour
     
     
 
-    // Game Service property
-    public static FiroozehGameService _gameService;
     private string Error;
     private string Res;
 
@@ -47,7 +47,7 @@ public class FlappyScript : MonoBehaviour
         
         LeaderBord.onClick.AddListener(()=>
         {
-            _gameService?.ShowLeaderBoardsUI(e =>
+            FiroozehGameService.Instance.ShowLeaderBoardsUI(e =>
             {
                 Error = "ShowLeaderBoardsUI Error : "+e;
             });
@@ -55,7 +55,7 @@ public class FlappyScript : MonoBehaviour
         
         Achievement.onClick.AddListener(()=>
         {
-            _gameService?.ShowAchievementsUI(e =>
+            FiroozehGameService.Instance.ShowAchievementsUI(e =>
             {
                 Error = "ShowAchievementsUI Error : "+e;
             });
@@ -63,64 +63,65 @@ public class FlappyScript : MonoBehaviour
         
         Survey.onClick.AddListener(()=>
         {
-            _gameService?.ShowSurveyUi(e =>
+            FiroozehGameService.Instance.ShowSurveyUi(e =>
             {
                 Error = "ShowSurveyUi Error : "+e;
             });
         });
         
         
-        if(_gameService == null)
-        FiroozehGameServiceInitializer
-            .With("Your clientId","Your clientSecret")
+        var config = new GameServiceClientConfiguration
+                .Builder(InstanceType.Auto)
+            .SetClientId("Your clientId")
+            .SetClientSecret("Your clientId")
+            .IsLogEnable(true)
             .IsNotificationEnable(true)
-            .CheckGameServiceOptionalUpdate(true)
             .CheckGameServiceInstallStatus(true)
-            .Init(g =>
-                {
-                    _gameService = g;
-                                        
-                    _gameService?.DownloadObbData("main.VersionCode.<PackageName>.obb", r =>
-                        {
-                            if (r.Equals("Data_Download_Finished") || r.Equals("Data_Downloaded"))
-                            {
-                                //Now Data Exist!! , Load Base Scenes
-                            }     
-                      
-                        },
-                        e =>
-                        {
-                            if(e.Equals("Data_Download_Dismissed"))
-                                Application.Quit();
-                            
-                            Error = "DownloadObbData Error : " + e;
-                        });
-                    
-                   
-
-                    
-                    
-                    _gameService?.GetSaveGame<Save>(save =>
-                    {
-                        ScoreManagerScript.Score = save.Score;
-                    }
-                        , e => {
-                        Error = "GetSaveGame Error : " + e;
-
-                    });
-                    
-                   
-                    
-                }, 
-                e =>
-                {
-                    Debug.Log("FiroozehGameServiceInitializerError: "+e);
-                });
+            .CheckGameServiceOptionalUpdate(false)
+            .Build();
         
+        FiroozehGameService.ConfigurationInstance(config);
+        FiroozehGameService.Run(OnFirstInit,Debug.LogError);
+      
       
 
     }
 
+    private void OnFirstInit()
+    {
+        FiroozehGameService.Instance.DownloadObbData("main.VersionCode.<PackageName>.obb", r =>
+            {
+                if (r.Equals("Data_Download_Finished") || r.Equals("Data_Downloaded"))
+                {
+                    //Now Data Exist!! , Load Base Scenes
+                }     
+                      
+            },
+            e =>
+            {
+                if(e.Equals("Data_Download_Dismissed"))
+                    Application.Quit();
+                            
+                Error = "DownloadObbData Error : " + e;
+            });
+                    
+                   
+
+                    
+                    
+        FiroozehGameService.Instance.GetSaveGame<Save>(save =>
+            {
+                ScoreManagerScript.Score = save.Score;
+            }
+            , e => {
+                Error = "GetSaveGame Error : " + e;
+
+            });
+
+
+    }
+    
+    
     FlappyYAxisTravelState flappyYAxisTravelState;
 
     enum FlappyYAxisTravelState
@@ -257,7 +258,7 @@ public class FlappyScript : MonoBehaviour
             {
                case  5:
                 {
-                    _gameService?.UnlockAchievement("FIVE_SCORE", c =>
+                    FiroozehGameService.Instance.UnlockAchievement("FIVE_SCORE", c =>
                     {
                         Res = "Five Score Achievement Unlocked!!";
                     }, e =>
@@ -268,7 +269,7 @@ public class FlappyScript : MonoBehaviour
                 }
                 case 10:
                 {
-                    _gameService?.UnlockAchievement("TEN_SCORE", c =>
+                    FiroozehGameService.Instance.UnlockAchievement("TEN_SCORE", c =>
                     {
                         Res = "Ten Score Achievement Unlocked!!";
                     }, e =>
@@ -279,7 +280,7 @@ public class FlappyScript : MonoBehaviour
                 }
                 case 15:
                 {
-                    _gameService?.UnlockAchievement("FIFTEEN_SCORE", c =>
+                    FiroozehGameService.Instance.UnlockAchievement("FIFTEEN_SCORE", c =>
                     {
                         Res = "Fifteen Score Achievement Unlocked!!";
                     }, e =>
@@ -291,7 +292,7 @@ public class FlappyScript : MonoBehaviour
                 }
                 case 20:
                 {
-                    _gameService?.UnlockAchievement("TWENTY_SCORE", c =>
+                    FiroozehGameService.Instance.UnlockAchievement("TWENTY_SCORE", c =>
                     {
                         Res = "Twenty Score Achievement Unlocked!!";
                     }, e =>
@@ -306,7 +307,7 @@ public class FlappyScript : MonoBehaviour
                 default:
                 {
                     if(ScoreManagerScript.Score > 20 && ScoreManagerScript.Score % 5 == 0)
-                    _gameService?.SubmitScore("FloppyBird_List",ScoreManagerScript.Score
+                        FiroozehGameService.Instance.SubmitScore("FloppyBird_List",ScoreManagerScript.Score
                         , c =>
                         {
                             Res = "SubmitScore with "+ScoreManagerScript.Score+" Saved!!";
@@ -343,7 +344,7 @@ public class FlappyScript : MonoBehaviour
     {
         ScoreManagerScript.score.gameObject.SetActive(false);
 
-        _gameService?.SaveGame("FloppyBird_SAVE_"+Time.time,
+        FiroozehGameService.Instance.SaveGame("FloppyBird_SAVE_"+Time.time,
             "FloppyBirdSaveDone"
             ,null,new Save {Score = ScoreManagerScript.Score},
             c =>

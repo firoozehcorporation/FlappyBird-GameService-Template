@@ -1,4 +1,4 @@
-﻿// <copyright file="IGameServiceCallback.cs" company="Firoozeh Technology LTD">
+﻿// <copyright file="IGameServiceLoginCheck.cs" company="Firoozeh Technology LTD">
 // Copyright (C) 2019 Firoozeh Technology LTD. All Rights Reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,6 @@
 //    limitations under the License.
 // </copyright>
 
-
 using FiroozehGameServiceAndroid.Core;
 using UnityEngine;
 
@@ -22,37 +21,31 @@ using UnityEngine;
 * @author Alireza Ghodrati
 */
 
-
-
-namespace FiroozehGameServiceAndroid.Interfaces
+namespace FiroozehGameServiceAndroid.Interfaces.App
 {
     #if UNITY_ANDROID
-    public class IGameServiceCallback : AndroidJavaProxy
+    public class IGameServiceLoginCheck : AndroidJavaProxy
     {
 
-        private readonly DelegateCore.OnCallback _oncallback;
-        private readonly DelegateCore.OnError _onError;
+        private readonly DelegateCore.IsUserLogin _UserLogin;
+        private readonly DelegateCore.OnError _OnError;
 
-        public IGameServiceCallback(DelegateCore.OnCallback callback, DelegateCore.OnError onError)
-            : base("ir.FiroozehCorp.UnityPlugin.Interfaces.IGameServiceCallback")
+        public IGameServiceLoginCheck(DelegateCore.IsUserLogin isUserLoggedIn, DelegateCore.OnError onError)
+            : base("ir.FiroozehCorp.UnityPlugin.App.Interfaces.IGameServiceLoginCheck")
         {
-            _oncallback = callback;
-            _onError = onError;
-
+            _UserLogin = isUserLoggedIn;
+            _OnError = onError;
         }
 
-        void OnCallback(string Result)
+        public void isLoggedIn(bool Status)
         {
-            _oncallback.Invoke(Result);
+            _UserLogin.Invoke(Status);
         }
 
-        void OnError(string Error)
+        public void OnError(string Error)
         {
-            _onError.Invoke(Error);
+            _OnError.Invoke(Error);
         }
-
-
-
     }
     #endif
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="LeaderBoardDetails.cs" company="Firoozeh Technology LTD">
+// <copyright file="GameServiceType.cs" company="Firoozeh Technology LTD">
 // Copyright (C) 2019 Firoozeh Technology LTD. All Rights Reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,31 +14,15 @@
 //    limitations under the License.
 // </copyright>
 
-using System.Collections.Generic;
-
 /**
 * @author Alireza Ghodrati
 */
 
 
-namespace FiroozehGameServiceAndroid.Models
+namespace FiroozehGameServiceAndroid.Enums
 {
-    [System.Serializable]
-    public class LeaderBoardDetails
+    public enum GameServiceType
     {
-
-        public LeaderBoard leaderboard { set; get; }
-
-        public List<Score> scores { set; get; }
-
-        public override string ToString()
-        {
-            return "LeaderBoardReceiver{" +
-                   "leaderboard=" + leaderboard +
-                   ", scores=" + scores +
-                   '}';
-        }
-     
+        App , Native
     }
 }
-
