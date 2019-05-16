@@ -319,7 +319,7 @@ namespace FiroozehGameServiceAndroid
         }
 
 
-        public void ShowSurveyUi(DelegateCore.OnError error)
+        public void ShowSurveyUI(DelegateCore.OnError error)
         {
             if (_gameServiceObj == null)
             {
@@ -355,16 +355,7 @@ namespace FiroozehGameServiceAndroid
                 return;
             }
             
-            if (_type == GameServiceType.Native)
-            {
-
-                if(FiroozehGameService.Configuration.EnableLog)
-                    LogUtil.LogError(Tag,"DownloadObbData Only Available In AppMode");
-                return;
-            }
-
-            
-                _gameServiceObj.Call("DownloadObbDataFile"
+              _gameServiceObj.Call("DownloadObbDataFile"
                     ,obbDataTag
                     , new IGameServiceCallback(downloadCallback.Invoke
                     , error.Invoke));

@@ -63,7 +63,7 @@ public class FlappyScript : MonoBehaviour
         
         Survey.onClick.AddListener(()=>
         {
-            FiroozehGameService.Instance.ShowSurveyUi(e =>
+            FiroozehGameService.Instance.ShowSurveyUI(e =>
             {
                 Error = "ShowSurveyUi Error : "+e;
             });
@@ -72,8 +72,8 @@ public class FlappyScript : MonoBehaviour
         
         var config = new GameServiceClientConfiguration
                 .Builder(InstanceType.Auto)
-            .SetClientId("Your clientId")
-            .SetClientSecret("Your clientId")
+            .SetClientId("Your ClientId")
+            .SetClientSecret("Your ClientSecret")
             .IsLogEnable(true)
             .IsNotificationEnable(true)
             .CheckGameServiceInstallStatus(true)
@@ -89,7 +89,8 @@ public class FlappyScript : MonoBehaviour
 
     private void OnFirstInit()
     {
-        FiroozehGameService.Instance.DownloadObbData("main.VersionCode.<PackageName>.obb", r =>
+        
+       /* FiroozehGameService.Instance.DownloadObbData("main.45.ir.FirooehCorp.FlappyBird.obb", r =>
             {
                 if (r.Equals("Data_Download_Finished") || r.Equals("Data_Downloaded"))
                 {
@@ -104,6 +105,8 @@ public class FlappyScript : MonoBehaviour
                             
                 Error = "DownloadObbData Error : " + e;
             });
+            
+            */
                     
                    
 
