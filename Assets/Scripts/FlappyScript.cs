@@ -74,7 +74,8 @@ public class FlappyScript : MonoBehaviour
                 .Builder(InstanceType.Auto)
             .SetClientId("Your ClientId")
             .SetClientSecret("Your ClientSecret")
-            .IsLogEnable(true)
+            .SetObbDataTag("main.45.ir.FirooehCorp.FlappyBird.obb")
+            .IsLogEnable(true) 
             .IsNotificationEnable(true)
             .CheckGameServiceInstallStatus(true)
             .CheckGameServiceOptionalUpdate(false)
@@ -89,29 +90,7 @@ public class FlappyScript : MonoBehaviour
 
     private void OnFirstInit()
     {
-        
-       /* FiroozehGameService.Instance.DownloadObbData("main.45.ir.FirooehCorp.FlappyBird.obb", r =>
-            {
-                if (r.Equals("Data_Download_Finished") || r.Equals("Data_Downloaded"))
-                {
-                    //Now Data Exist!! , Load Base Scenes
-                }     
-                      
-            },
-            e =>
-            {
-                if(e.Equals("Data_Download_Dismissed"))
-                    Application.Quit();
-                            
-                Error = "DownloadObbData Error : " + e;
-            });
-            
-            */
-                    
-                   
-
-                    
-                    
+              
         FiroozehGameService.Instance.GetSaveGame<Save>(save =>
             {
                 ScoreManagerScript.Score = save.Score;
