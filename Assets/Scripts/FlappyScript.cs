@@ -74,7 +74,6 @@ public class FlappyScript : MonoBehaviour
                 .Builder(InstanceType.Auto)
             .SetClientId("Your ClientId")
             .SetClientSecret("Your ClientSecret")
-            .SetObbDataTag("main.45.ir.FirooehCorp.FlappyBird.obb")
             .IsLogEnable(true) 
             .IsNotificationEnable(true)
             .CheckGameServiceInstallStatus(true)
