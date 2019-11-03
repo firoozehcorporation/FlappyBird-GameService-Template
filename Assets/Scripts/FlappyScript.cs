@@ -47,7 +47,7 @@ public class FlappyScript : MonoBehaviour
         
         LeaderBord.onClick.AddListener(()=>
         {
-            FiroozehGameService.Instance.ShowLeaderBoardsUI(e =>
+            FiroozehGameService.Instance.ShowLeaderBoardsUi(e =>
             {
                 Error = "ShowLeaderBoardsUI Error : "+e;
             });
@@ -55,7 +55,7 @@ public class FlappyScript : MonoBehaviour
         
         Achievement.onClick.AddListener(()=>
         {
-            FiroozehGameService.Instance.ShowAchievementsUI(e =>
+            FiroozehGameService.Instance.ShowAchievementsUi(e =>
             {
                 Error = "ShowAchievementsUI Error : "+e;
             });
@@ -63,7 +63,7 @@ public class FlappyScript : MonoBehaviour
         
         Survey.onClick.AddListener(()=>
         {
-            FiroozehGameService.Instance.ShowSurveyUI(e =>
+            FiroozehGameService.Instance.ShowSurveyUi(e =>
             {
                 Error = "ShowSurveyUi Error : "+e;
             });
@@ -71,7 +71,7 @@ public class FlappyScript : MonoBehaviour
         
         
         var config = new GameServiceClientConfiguration
-                .Builder(InstanceType.Auto)
+                .Builder(LoginType.Normal)
             .SetClientId("Your ClientId")
             .SetClientSecret("Your ClientSecret")
             .IsLogEnable(true) 
@@ -327,7 +327,7 @@ public class FlappyScript : MonoBehaviour
 
         FiroozehGameService.Instance.SaveGame("FloppyBird_SAVE_"+Time.time,
             "FloppyBirdSaveDone"
-            ,null,new Save {Score = ScoreManagerScript.Score},
+            ,new Save {Score = ScoreManagerScript.Score},
             c =>
             {
                     

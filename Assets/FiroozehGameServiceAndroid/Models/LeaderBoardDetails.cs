@@ -14,7 +14,9 @@
 //    limitations under the License.
 // </copyright>
 
+using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 /**
 * @author Alireza Ghodrati
@@ -23,19 +25,33 @@ using System.Collections.Generic;
 
 namespace FiroozehGameServiceAndroid.Models
 {
-    [System.Serializable]
+    /// <summary>
+    /// Represents LeaderBoardDetails Data Model In Game Service Basic API
+    /// </summary>
+    [Serializable]
     public class LeaderBoardDetails
     {
 
-        public LeaderBoard leaderboard { set; get; }
+        /// <summary>
+        /// Gets the LeaderBoard.
+        /// </summary>
+        /// <value>the LeaderBoard</value>
+        [JsonProperty("leaderboard")]
+        public LeaderBoard Leaderboard { set; get; }
 
-        public List<Score> scores { set; get; }
+        
+        /// <summary>
+        /// Gets the List Of Scores.
+        /// </summary>
+        /// <value>the List Of Scores</value>
+        [JsonProperty("scores")]
+        public List<Score> Scores { set; get; }
 
         public override string ToString()
         {
             return "LeaderBoardReceiver{" +
-                   "leaderboard=" + leaderboard +
-                   ", scores=" + scores +
+                   "leaderboard=" + Leaderboard +
+                   ", scores=" + Scores +
                    '}';
         }
      

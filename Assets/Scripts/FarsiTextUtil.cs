@@ -1,3 +1,7 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 // <copyright file="FarsiTextUtil.cs" company="Firoozeh Technology LTD">
 // Copyright (C) 2019 Firoozeh Technology LTD. All Rights Reserved.
 //

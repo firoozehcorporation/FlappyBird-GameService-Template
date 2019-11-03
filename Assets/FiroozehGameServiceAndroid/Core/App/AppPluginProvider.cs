@@ -22,19 +22,22 @@ using UnityEngine;
 
 namespace FiroozehGameServiceAndroid.Core.App
 {
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
+    /// <summary>
+    /// Represents Game Service Plugin Provider In App Mode
+    /// </summary>
     public static class AppPluginProvider
     {
 
         public static AndroidJavaObject GetGameService()
         {
-            var unityInstanter = new AndroidJavaClass("ir.FiroozehCorp.GameService.UnityPackage.App.Handlers.UnityGameService");
+            var unityInstanter = new AndroidJavaClass("ir.firoozehcorp.gameservice.android.unity.App.Handlers.UnityGameService");
             return unityInstanter.CallStatic<AndroidJavaObject>("GetInstance");
         }
 
         public static AndroidJavaObject GetLoginService()
         {
-            var unityInstanter = new AndroidJavaClass("ir.FiroozehCorp.GameService.UnityPackage.App.Handlers.UnityLoginService");
+            var unityInstanter = new AndroidJavaClass("ir.firoozehcorp.gameservice.android.unity.App.Handlers.UnityLoginService");
             return unityInstanter.CallStatic<AndroidJavaObject>("GetInstance");
         }
 
@@ -44,5 +47,5 @@ namespace FiroozehGameServiceAndroid.Core.App
             return unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         }
     }
-    #endif
+#endif
 }

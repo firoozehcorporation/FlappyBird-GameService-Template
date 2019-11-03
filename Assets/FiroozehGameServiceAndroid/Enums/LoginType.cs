@@ -1,4 +1,4 @@
-// <copyright file="InstanceType.cs" company="Firoozeh Technology LTD">
+// <copyright file="LoginTypes.cs" company="Firoozeh Technology LTD">
 // Copyright (C) 2019 Firoozeh Technology LTD. All Rights Reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,12 +18,13 @@
 * @author Alireza Ghodrati
 */
 
-
 namespace FiroozehGameServiceAndroid.Enums
-
 {
-    public enum InstanceType
+    /// <summary>
+    /// Represents LoginType Of Game Service In First Initialize
+    /// </summary>
+    public enum LoginType
     {
-        Native , Auto
+        Normal , Guest
     }
 }

@@ -15,34 +15,98 @@
 // </copyright>
 
 using System;
+using Newtonsoft.Json;
+
 /**
 * @author Alireza Ghodrati
 */
 namespace FiroozehGameServiceAndroid.Models
 {
+    /// <summary>
+    /// Represents Achievement Data Model In Game Service Basic API
+    /// </summary>
     [Serializable]
     public class Achievement
     {
 
-        public string name { set; get; }
-        public string key { set; get; }
-        public string desc { set; get; }
-        public int point { set; get; }
-        public string image { set; get; }
-        public bool status { set; get; }
-        public string game { set; get; }
-        public bool earned { set; get; }
+        /// <summary>
+        /// Gets the Achievement Name.
+        /// </summary>
+        /// <value>the Achievement Name</value>
+        [JsonProperty("name")]
+        public string Name { set; get; }
+        
+        
+        /// <summary>
+        /// Gets the Achievement Key.
+        /// You Can Use It To Unlock Achievement
+        /// </summary>
+        /// <value>the Achievement Key</value>
+        [JsonProperty("key")]
+        public string Key { set; get; }
+        
+        
+        /// <summary>
+        /// Gets the Achievement Description.
+        /// </summary>
+        /// <value>the Achievement Description</value>
+        [JsonProperty("desc")]
+        public string Desc { set; get; }
+        
+        
+        /// <summary>
+        /// Gets the Achievement Point.
+        /// </summary>
+        /// <value>the Achievement Point</value>
+        [JsonProperty("point")]
+        public int Point { set; get; }
+        
+        
+        /// <summary>
+        /// Gets the Achievement Cover URL.
+        /// </summary>
+        /// <value>the Achievement Cover URL</value>
+        [JsonProperty("image")]
+        public string Image { set; get; }
+        
+        
+        /// <summary>
+        /// Gets the Achievement status.
+        /// if the status is True You Can Unlock Achievement
+        /// </summary>
+        /// <value>the Achievement status</value>
+        [JsonProperty("status")]
+        public bool Status { set; get; }
+        
+        
+        /// <summary>
+        /// Gets the Game id.
+        /// </summary>
+        /// <value>the Game id</value>
+        [JsonProperty("game")]
+        public string Game { set; get; }
+        
+        
+        /// <summary>
+        /// Gets the Status of Earned Achievement
+        /// if the status is True You Earned this Achievement Before
+        /// </summary>
+        /// <value>the Status of Earned Achievement</value>
+        [JsonProperty("earned")]
+        public bool Earned { set; get; }
+        
+        
         public override string ToString()
         {
             return "Achievement{" +
-                   "name='" + name + '\'' +
-                   ", key='" + key + '\'' +
-                   ", desc='" + desc + '\'' +
-                   ", point=" + point +
-                   ", image='" + image + '\'' +
-                   ", status=" + status +
-                   ", game='" + game + '\'' +
-                   ", earned=" + earned +
+                   "name='" + Name + '\'' +
+                   ", key='" + Key + '\'' +
+                   ", desc='" + Desc + '\'' +
+                   ", point=" + Point +
+                   ", image='" + Image + '\'' +
+                   ", status=" + Status +
+                   ", game='" + Game + '\'' +
+                   ", earned=" + Earned +
                    '}';
         }
     }

@@ -16,7 +16,6 @@
 
 
 using System;
-using FiroozehGameServiceAndroid.Core;
 using FiroozehGameServiceAndroid.Core.Native;
 using FiroozehGameServiceAndroid.Enums;
 
@@ -26,20 +25,23 @@ using FiroozehGameServiceAndroid.Enums;
 
 namespace FiroozehGameServiceAndroid.Builders.Native
 {
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
+    /// <summary>
+    /// Represents Initialize GameService In Native Mode.
+    /// </summary>
     internal static class GameServiceNativeInitializer
     {
         internal static void Init(GameServiceClientConfiguration configuration
             ,Action<GameService> onSuccess
             ,Action<string> onError)
         {
-            var nativeService =  NativePluginHandler.GetGameServiceInstance();
+            var nativeService = NativePluginHandler.GetGameServiceInstance();
             NativePluginHandler.InitGameService(
                 nativeService
                 ,configuration
                 ,gameService=>{ onSuccess.Invoke(new GameService(gameService,GameServiceType.Native,configuration.HaveNotification));}
-                ,onError.Invoke);
+                ,onError.Invoke,configuration.NotificationListener);
         }
     }
-    #endif
+#endif
 }

@@ -20,31 +20,70 @@
 */
 
 
+using System;
+using Newtonsoft.Json;
+
 namespace FiroozehGameServiceAndroid.Models
 {
-    [System.Serializable]
+    /// <summary>
+    /// Represents Score Data Model In Game Service Basic API
+    /// </summary>
+    [Serializable]
     public class Score
     {
 
-        public string game { set; get; }
+        /// <summary>
+        /// Gets the Game id.
+        /// </summary>
+        /// <value>the Game id</value>
+        [JsonProperty("game")]
+        public string Game { set; get; }
 
-        public User user { set; get; }
+        
+        /// <summary>
+        /// Gets the User Submit this Score.
+        /// </summary>
+        /// <value>the User Submit this Score</value>
+        [JsonProperty("user")]
+        public User User { set; get; }
 
-        public int value { set; get; }
+        /// <summary>
+        /// Gets the Value of This Score.
+        /// </summary>
+        /// <value>the Value of This Score</value>
+        [JsonProperty("value")]
+        public int Value { set; get; }
     
-        public int rank { set; get; }
+        
+        /// <summary>
+        /// Gets the Rank of This Score.
+        /// </summary>
+        /// <value>the Rank of This Score</value>
+        [JsonProperty("rank")]
+        public int Rank { set; get; }
     
-        public int tries { set; get; }
+        /// <summary>
+        /// Gets the Tries Count of This Score.
+        /// </summary>
+        /// <value>the Tries Count of This Score</value>
+        [JsonProperty("tries")]
+        public int Tries { set; get; }
     
-        public bool me { set; get; }
+        
+        /// <summary>
+        /// if this is Score Submit By You or Not
+        /// </summary>
+        /// <value>this Score Submit By You or Not</value>
+        [JsonProperty("me")]
+        public bool IsMe { set; get; }
     
 
         public override string ToString()
         {
             return "Score{" +
-                   "game='" + game + '\'' +
-                   ", user='" + user + '\'' +
-                   ", Valvalueue=" + value +
+                   "game='" + Game + '\'' +
+                   ", user='" + User + '\'' +
+                   ", value=" + Value +
                    '}';
         }
     }

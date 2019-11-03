@@ -15,7 +15,6 @@
 // </copyright>
 
 using System.Collections.Generic;
-using FiroozehGameServiceAndroid.Builders.App;
 using FiroozehGameServiceAndroid.Models;
 using UnityEngine;
 
@@ -26,6 +25,9 @@ using UnityEngine;
 namespace FiroozehGameServiceAndroid.Core
 {
     #if UNITY_ANDROID
+    /// <summary>
+    /// Represents Game Service DelegateCore
+    /// </summary>
     public static class DelegateCore {
 
         public delegate void OnSuccessInit(AndroidJavaObject gameServiceObj);
@@ -36,6 +38,8 @@ namespace FiroozehGameServiceAndroid.Core
         public delegate void OnError(string error);
 
         public delegate void IsUserLogin(bool status);
+        public delegate void IsUserLogout(bool status);
+
         
         public delegate void OnSaveGame<in T>(T result);
 
@@ -52,6 +56,23 @@ namespace FiroozehGameServiceAndroid.Core
 
 
         public delegate void OnGetUserData(User user);
+       
+
+        public delegate void JsonData(string jsonData);
+        public delegate void NotificationListener(string jsonData);
+
+
+        public delegate void OnBucketItems<TBucket>(List<TBucket> buckets);
+        public delegate void OnBucketItem<TBucket>(Bucket<TBucket> bucket);
+        public delegate void OnUpdateBucketItem<TBucket>(Bucket<TBucket> bucket);
+        public delegate void OnAddBucketItem<TBucket>(Bucket<TBucket> bucket);
+        public delegate void OnDeleteBucket(bool isDeleted);
+
+
+        public delegate void OnEvent(int type,string payLoad);
+
+
+
 
     }
     #endif

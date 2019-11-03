@@ -14,6 +14,7 @@
 //    limitations under the License.
 // </copyright>
 
+using FiroozehGameServiceAndroid.Enums;
 using FiroozehGameServiceAndroid.Interfaces;
 using FiroozehGameServiceAndroid.Interfaces.App;
 using UnityEngine;
@@ -25,6 +26,9 @@ using UnityEngine;
 namespace FiroozehGameServiceAndroid.Core.App
 {
     #if UNITY_ANDROID
+    /// <summary>
+    /// Represents Game Service Plugin Handler In App Mode
+    /// </summary>
     public static class AppPluginHandler {
 
         private static AndroidJavaObject GetGameServiceInstance()
@@ -50,9 +54,12 @@ namespace FiroozehGameServiceAndroid.Core.App
         public static void InitGameService(
              string clientId
             ,string clientSecret
-             ,bool logEnable
-            ,DelegateCore.OnSuccessInit onSuccess,
-            DelegateCore.OnError onError)
+            ,bool logEnable
+            ,bool isGuest
+            ,DelegateCore.OnSuccessInit onSuccess
+            ,DelegateCore.OnError onError
+            ,DelegateCore.NotificationListener notificationListener
+            )
         {
    
             var gameService = GetGameServiceInstance();
@@ -61,11 +68,17 @@ namespace FiroozehGameServiceAndroid.Core.App
                 clientId,
                 clientSecret,
                 logEnable,
+                isGuest,
                 new IGameServiceCallback(callBack => {
                         if(callBack.Equals("Success"))
                             onSuccess.Invoke(gameService);
                     },
-                    onError.Invoke));
+                    onError.Invoke)
+                ,new IGSNotificationListener(l =>
+                {
+                    if(notificationListener != null)
+                        notificationListener.Invoke(l);
+                }));
         }
 
         public static void InitGameLoginService(

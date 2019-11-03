@@ -16,6 +16,8 @@
 
 
 using FiroozehGameServiceAndroid.Builders;
+using FiroozehGameServiceAndroid.Enums;
+using FiroozehGameServiceAndroid.Enums.GSLive;
 using FiroozehGameServiceAndroid.Interfaces;
 using UnityEngine;
 
@@ -26,6 +28,9 @@ using UnityEngine;
 namespace FiroozehGameServiceAndroid.Core.Native
 {
     #if UNITY_ANDROID
+    /// <summary>
+    /// Represents Game Service Plugin Handler In Native Mode
+    /// </summary>
     public static class NativePluginHandler
     {
          
@@ -53,20 +58,28 @@ namespace FiroozehGameServiceAndroid.Core.Native
         public static void InitGameService(
             AndroidJavaObject gameService
             ,GameServiceClientConfiguration configuration
-            ,DelegateCore.OnSuccessInit onSuccess,
-            DelegateCore.OnError onError)
+            ,DelegateCore.OnSuccessInit onSuccess
+            ,DelegateCore.OnError onError
+            ,DelegateCore.NotificationListener notificationListener
+           )
         {
 
             gameService.Call("InitGameService"
                 ,configuration.ClientId
                 ,configuration.ClientSecret
                 ,configuration.EnableLog
+                ,configuration.LoginType == LoginType.Guest
                 ,new IGameServiceCallback(c =>
                 {
                     if(c.Equals("Success"))
                         onSuccess.Invoke(gameService);
                         
-                }, onError.Invoke));
+                }, onError.Invoke)
+                ,new IGSNotificationListener(l =>
+                {
+                    if(notificationListener != null)
+                        notificationListener.Invoke(l);
+                }));
 
         }        
     }

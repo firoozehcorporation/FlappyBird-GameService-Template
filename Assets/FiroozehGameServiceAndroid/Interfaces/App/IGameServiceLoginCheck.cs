@@ -23,7 +23,10 @@ using UnityEngine;
 
 namespace FiroozehGameServiceAndroid.Interfaces.App
 {
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
+    /// <summary>
+    /// Represents GameService Internal interface
+    /// </summary>
     public class IGameServiceLoginCheck : AndroidJavaProxy
     {
 
@@ -31,7 +34,7 @@ namespace FiroozehGameServiceAndroid.Interfaces.App
         private readonly DelegateCore.OnError _OnError;
 
         public IGameServiceLoginCheck(DelegateCore.IsUserLogin isUserLoggedIn, DelegateCore.OnError onError)
-            : base("ir.FiroozehCorp.GameService.UnityPackage.App.Interfaces.IGameServiceLoginCheck")
+            : base("ir.firoozehcorp.gameservice.android.unity.App.Interfaces.IGameServiceLoginCheck")
         {
             _UserLogin = isUserLoggedIn;
             _OnError = onError;
@@ -47,5 +50,5 @@ namespace FiroozehGameServiceAndroid.Interfaces.App
             _OnError.Invoke(Error);
         }
     }
-    #endif
+#endif
 }

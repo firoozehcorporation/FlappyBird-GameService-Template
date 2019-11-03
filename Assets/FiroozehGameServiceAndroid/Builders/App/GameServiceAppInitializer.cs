@@ -15,9 +15,9 @@
 // </copyright>
 
 using System;
-using FiroozehGameServiceAndroid.Core;
 using FiroozehGameServiceAndroid.Core.App;
 using FiroozehGameServiceAndroid.Enums;
+using FiroozehGameServiceAndroid.Enums.GSLive;
 
 /**
 * @author Alireza Ghodrati
@@ -27,6 +27,11 @@ using FiroozehGameServiceAndroid.Enums;
 namespace FiroozehGameServiceAndroid.Builders.App
 {
     #if UNITY_ANDROID
+    
+    /// <summary>
+    /// Represents Initialize GameService In App Mode.
+    /// </summary>
+ 
     internal static class GameServiceAppInitializer
     {
         internal static void Init(
@@ -35,39 +40,58 @@ namespace FiroozehGameServiceAndroid.Builders.App
             ,Action<string> onError)
         {
 
+            if (configuration.LoginType == LoginType.Normal)
+            {
                 FiroozehGameServiceAppLoginCheck.CheckUserLoginStatus(
                     configuration.CheckAppStatus
                     , configuration.CheckOptionalUpdate
-                    ,configuration.EnableLog
+                    , configuration.EnableLog
                     , isLogin =>
                     {
                         if (isLogin)
                         {
                             AppPluginHandler.InitGameService(
-                                configuration.ClientId,configuration.ClientSecret,configuration.EnableLog,
-                                s => { onSuccess.Invoke(new GameService(s,GameServiceType.App, configuration.HaveNotification)); }
-                                ,onError.Invoke);
-                        }      
+                                configuration.ClientId, configuration.ClientSecret, configuration.EnableLog,false,
+                                s =>
+                                {
+                                    onSuccess.Invoke(new GameService(s, GameServiceType.App,
+                                        configuration.HaveNotification));
+                                }
+                                , onError.Invoke, configuration.NotificationListener);
+                        }
                         else
                             FiroozehGameServiceAppLoginCheck.ShowLoginUI(
                                 configuration.CheckAppStatus
                                 , configuration.CheckOptionalUpdate
-                                ,configuration.EnableLog
+                                , configuration.EnableLog
                                 , r =>
                                 {
                                     if (r)
                                     {
                                         AppPluginHandler.InitGameService(
-                                            configuration.ClientId, configuration.ClientSecret,configuration.EnableLog,
+                                            configuration.ClientId, configuration.ClientSecret, configuration.EnableLog,false,
                                             s =>
                                             {
-                                                onSuccess.Invoke(new GameService(s,GameServiceType.App, configuration.HaveNotification));
+                                                onSuccess.Invoke(new GameService(s, GameServiceType.App,
+                                                    configuration.HaveNotification));
                                             }
-                                            , onError.Invoke);
+                                            , onError.Invoke, configuration.NotificationListener);
                                     }
                                 }, onError.Invoke);
                     }, onError.Invoke);
-            
+            }
+            else
+            {
+                AppPluginHandler.InitGameService(
+                    configuration.ClientId, configuration.ClientSecret, configuration.EnableLog,true,
+                    s =>
+                    {
+                        onSuccess.Invoke(new GameService(s, GameServiceType.App,
+                            configuration.HaveNotification));
+                    }
+                    , onError.Invoke, configuration.NotificationListener);
+            }
+
         }
     }
 #endif

@@ -15,7 +15,9 @@
 // </copyright>
 
 
+using FiroozehGameServiceAndroid.Core;
 using FiroozehGameServiceAndroid.Enums;
+using FiroozehGameServiceAndroid.Enums.GSLive;
 
 /**
 * @author Alireza Ghodrati
@@ -25,6 +27,9 @@ using FiroozehGameServiceAndroid.Enums;
 namespace FiroozehGameServiceAndroid.Builders
 {
     #if UNITY_ANDROID
+    /// <summary>
+    /// Represents ClientConfiguration For Game Service 
+    /// </summary>
     public class GameServiceClientConfiguration
     {
         
@@ -34,14 +39,9 @@ namespace FiroozehGameServiceAndroid.Builders
         private readonly bool _enableLog;
         private readonly string _downloadTag; 
         private readonly string _clientId, _clientSecret;
-        private readonly InstanceType _type;
+        private readonly DelegateCore.NotificationListener _notificationListener;
+        public LoginType LoginType { get; set; }
 
-
-        public InstanceType InstanceType
-        {
-            get { return _type; }
-        }
-        
         public bool HaveNotification
         {
             get { return _haveNotification; }
@@ -76,11 +76,15 @@ namespace FiroozehGameServiceAndroid.Builders
         {
             get { return _downloadTag; }
         }
+        
+        public DelegateCore.NotificationListener NotificationListener
+        {
+            get { return _notificationListener; }
+        }
 
 
         private GameServiceClientConfiguration(Builder builder)
         {
-            _type = builder.Type;
             _haveNotification = builder.HaveNotification;
             _checkAppStatus = builder.CheckAppStatus;
             _clientId = builder.ClientId;
@@ -88,6 +92,8 @@ namespace FiroozehGameServiceAndroid.Builders
             _checkOptionalUpdate = builder.CheckOptionalUpdate;
             _enableLog = builder.EnableLog;
             _downloadTag = builder.DownloadTag;
+            _notificationListener = builder.NotificationListener;
+            LoginType = builder.LoginType;
 
         }
         
@@ -99,12 +105,13 @@ namespace FiroozehGameServiceAndroid.Builders
             private  bool _enableLog;
             private string _clientId, _clientSecret;
             private string _downloadTag;
-            private readonly InstanceType _type;
+            private readonly LoginType _loginType ;
+            private DelegateCore.NotificationListener _notificationListener;
 
 
-            public Builder(InstanceType instanceType)
+            public Builder(LoginType loginType)
             {
-                _type = instanceType;
+                _loginType = loginType;
             }
 
             public Builder SetClientId(string clientId)
@@ -122,6 +129,12 @@ namespace FiroozehGameServiceAndroid.Builders
             public Builder IsNotificationEnable(bool isEnable)
             {
                 _haveNotification = isEnable;
+                return this;
+            }
+
+            public Builder SetNotificationListener(DelegateCore.NotificationListener notificationListener)
+            {
+                _notificationListener = notificationListener;
                 return this;
             }
 
@@ -143,6 +156,7 @@ namespace FiroozehGameServiceAndroid.Builders
                 return this;
             }
 
+        
             public Builder SetObbDataTag(string dataTag)
             {
                 _downloadTag = dataTag;
@@ -153,11 +167,6 @@ namespace FiroozehGameServiceAndroid.Builders
             public GameServiceClientConfiguration Build()
             {
                 return new GameServiceClientConfiguration(this);
-            }
-
-            public InstanceType Type
-            {
-                get { return _type; }
             }
 
             public string DownloadTag
@@ -193,6 +202,16 @@ namespace FiroozehGameServiceAndroid.Builders
             public bool EnableLog
             {
                 get { return _enableLog; }
+            }
+
+            public DelegateCore.NotificationListener NotificationListener
+            {
+                get { return _notificationListener; }
+            }
+
+            public LoginType LoginType
+            {
+                get { return _loginType; }
             }
         }
     }
