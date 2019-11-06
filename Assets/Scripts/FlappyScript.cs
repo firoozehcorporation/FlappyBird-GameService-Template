@@ -291,7 +291,7 @@ public class FlappyScript : MonoBehaviour
                         FiroozehGameService.Instance.SubmitScore("FloppyBird_List",ScoreManagerScript.Score
                         , c =>
                         {
-                            Res = "SubmitScore with "+ScoreManagerScript.Score+" Saved!!";
+                            Res = "SubmitScore with "+c.Score+" Saved!!";
 
                         }, e =>
                         {
